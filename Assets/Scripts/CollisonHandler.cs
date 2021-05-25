@@ -1,29 +1,61 @@
 
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 public class CollisonHandler : MonoBehaviour
+
 {
+    [SerializeField] float reloadLevelDelay = 1f;
+    [SerializeField] float loadNextLevelDelay = 6f;
+    [SerializeField] AudioClip success;
+    [SerializeField] AudioClip crash;
+    AudioSource audioSource;
+
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
     void OnCollisionEnter(Collision collision)
     {
+
+
+
         switch (collision.gameObject.tag)
         {
             case "Friendly":
-                Debug.Log("You collided with RESPAWN");
-                break;
-
-            case "Fuel":
-                Debug.Log("You collieded with FUEL");
+                
+                
                 break;
             
             case "Finish":
-                LoadNextLevel();
+                StartNextLevelSequence();
+                Debug.Log("LANDING PAD");
                 break;
 
             default:
-                ReloadLevel();
+                StartCrashSequence();
+                Debug.Log("CRASH");
                 break;
         }
+    }
+
+    
+    void StartCrashSequence()
+    {
+        audioSource.PlayOneShot(crash);
+        GetComponent<Movement>().enabled = false;
+        Invoke("ReloadLevel", reloadLevelDelay);
+    }
+
+    void StartNextLevelSequence()
+    {
+        audioSource.PlayOneShot(success);
+        GetComponent<Movement>().enabled = false;
+        Invoke("LoadNextLevel", loadNextLevelDelay);
     }
 
     void ReloadLevel()
@@ -42,7 +74,8 @@ public class CollisonHandler : MonoBehaviour
             nextSceneIndex = 0;
         }
         SceneManager.LoadScene(nextSceneIndex);
-        
+
+        Debug.Log("You hit the finish area.");
         
     }
 }

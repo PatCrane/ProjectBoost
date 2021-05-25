@@ -32,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 6981958225128918845}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -45.7573, y: 6.8728, z: 1.1542}
-  m_LocalScale: {x: 1.4071164, y: 6.0787983, z: 1.4731861}
+  m_LocalScale: {x: 1.4071164, y: 3.115749, z: 1.4731861}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -130,6 +130,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainThrust: 1000
   rotationSpeed: 100
+  mainEngine: {fileID: 8300000, guid: 37811df4779137d46b00e265ad6edb5b, type: 3}
 --- !u!82 &4398797478707829538
 AudioSource:
   m_ObjectHideFlags: 0
@@ -140,7 +141,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 37811df4779137d46b00e265ad6edb5b, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -238,3 +239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33c21425b6a0e22459daeef63253699c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  reloadLevelDelay: 1
+  loadNextLevelDelay: 6
+  success: {fileID: 8300000, guid: f9c66cb8d4df8814fac0e1859bd7c0a7, type: 3}
+  crash: {fileID: 8300000, guid: 9bb45e3e6bf23044c846ff344f862973, type: 3}
