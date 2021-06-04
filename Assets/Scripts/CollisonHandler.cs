@@ -12,7 +12,13 @@ public class CollisonHandler : MonoBehaviour
     [SerializeField] float loadNextLevelDelay = 6f;
     [SerializeField] AudioClip success;
     [SerializeField] AudioClip crash;
+
+    [SerializeField] ParticleSystem successParticles;
+    [SerializeField] ParticleSystem crashParticles;
+    
     AudioSource audioSource;
+
+    bool isTransitioning = false;
 
     void Start()
     {
@@ -23,14 +29,15 @@ public class CollisonHandler : MonoBehaviour
     {
 
 
+        if (isTransitioning) { return; }
 
         switch (collision.gameObject.tag)
         {
             case "Friendly":
-                
-                
+
+
                 break;
-            
+
             case "Finish":
                 StartNextLevelSequence();
                 Debug.Log("LANDING PAD");
@@ -41,19 +48,27 @@ public class CollisonHandler : MonoBehaviour
                 Debug.Log("CRASH");
                 break;
         }
+        
+
     }
 
     
     void StartCrashSequence()
     {
+        isTransitioning = true;
+        audioSource.Stop();
         audioSource.PlayOneShot(crash);
+        crashParticles.Play();
         GetComponent<Movement>().enabled = false;
         Invoke("ReloadLevel", reloadLevelDelay);
     }
 
     void StartNextLevelSequence()
     {
+        isTransitioning = true;
+        audioSource.Stop();
         audioSource.PlayOneShot(success);
+        successParticles.Play();
         GetComponent<Movement>().enabled = false;
         Invoke("LoadNextLevel", loadNextLevelDelay);
     }
