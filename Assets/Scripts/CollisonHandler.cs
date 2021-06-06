@@ -19,17 +19,31 @@ public class CollisonHandler : MonoBehaviour
     AudioSource audioSource;
 
     bool isTransitioning = false;
+    bool collisionDisabled = false;
 
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
     }
 
+    void Update()
+    {
+        RespondToDebugKeys();
+    }
+
+    void RespondToDebugKeys()
+    {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            collisionDisabled = !collisionDisabled; //toggle collision
+        }
+    }
+
     void OnCollisionEnter(Collision collision)
     {
 
 
-        if (isTransitioning) { return; }
+        if (isTransitioning || collisionDisabled) { return; }
 
         switch (collision.gameObject.tag)
         {
@@ -40,12 +54,12 @@ public class CollisonHandler : MonoBehaviour
 
             case "Finish":
                 StartNextLevelSequence();
-                Debug.Log("LANDING PAD");
+                
                 break;
 
             default:
                 StartCrashSequence();
-                Debug.Log("CRASH");
+                
                 break;
         }
         
@@ -90,7 +104,7 @@ public class CollisonHandler : MonoBehaviour
         }
         SceneManager.LoadScene(nextSceneIndex);
 
-        Debug.Log("You hit the finish area.");
+        
         
     }
 }
